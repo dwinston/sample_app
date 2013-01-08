@@ -65,6 +65,17 @@ describe "UserPages" do
       it { should have_content(m2.content) }
       it { should have_content(user.microposts.count) }
     end
+
+    describe "as another user" do
+      let(:another_user) {FactoryGirl.create(:user) }
+      
+      before do
+        sign_in another_user
+        visit user_path(user)
+      end
+
+      it { should_not have_link('delete') }
+    end
   end
 
   describe "signup page" do
